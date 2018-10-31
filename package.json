@@ -1,0 +1,15 @@
+{
+  "name": "snake",
+  "version": "0.0.0",
+  "description": "No description",
+  "author": "Evan Bacon",
+  "private": true,
+  "main": "node_modules/expo/AppEntry.js",
+  "dependencies": {
+    "expo": "^30.0.0",
+    "react": "16.3.1",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-30.0.0.tar.gz",
+    "expo-pixi": "0.3.1",
+    "react-native-paper": "2.1.3"
+  }
+}
