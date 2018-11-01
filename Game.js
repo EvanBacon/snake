@@ -100,14 +100,14 @@ class Board extends PIXI.Container {
 
   _generateField = () => {
     let index = 0;
-    let square;
+    let tile;
     this.matrix = [];
     for (let col = 0; col < this._boardSize.col; col++) {
       this.matrix[col] = [];
       for (let row = 0; row < this._boardSize.row; row++) {
-        square = new Square(this._tileSize, col, row, false, index);
-        this.matrix[col][row] = square;
-        this.addChild(square);
+        tile = new Tile(this._tileSize, col, row, false, index);
+        this.matrix[col][row] = tile;
+        this.addChild(tile);
         index += 1;
       }
     }
@@ -224,7 +224,7 @@ const otherDir = {
   [Directions.LEFT]: Directions.RIGHT,
 };
 
-class SquareGraphic extends PIXI.Graphics {
+class Square extends PIXI.Graphics {
   _color;
   _size;
 
@@ -254,7 +254,7 @@ class SquareGraphic extends PIXI.Graphics {
   }
 }
 
-class Square extends SquareGraphic {
+class Tile extends Square {
   direction = Directions.LEFT;
   _isFood = false;
   _updateColor = () => {
