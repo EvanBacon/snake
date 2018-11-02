@@ -4,18 +4,23 @@ import { GestureHandler } from 'expo';
 const { Directions } = GestureHandler;
 
 function _loopValue(v, min, max) {
-  if (v < min) return max;
-  else if (v > max) return min;
+  if (Settings.areWallsLooping) {
+    if (v < min) return max;
+    else if (v > max) return min;
+  }
   return v;
 }
 
 const Settings = {
-  initialSize: 10,
-  tileSize: 20,
+  initialSize: 6,
+  tileSize: 30,
   hasGrid: true,
-  foodColor: 0x6f42c1,
-  snakeColor: 0x50b948,
-  backgroundColor: 0xecf0f1,
+  foodColor: 0xff0000,
+  snakeColor: 0x6660e7,
+  backgroundColor: 0xeeeeee,
+  timeInterval: 70,
+  areWallsLooping: true,
+  initialFood: 3,
 };
 
 export default class Main {
@@ -28,7 +33,11 @@ export default class Main {
     const size = Settings.tileSize * PixelRatio.get();
     const width = Math.round(this.app.renderer.width / size);
     const height = Math.round(this.app.renderer.height / size);
-    const board = new Board(size, new Position(height, width), 70);
+    const board = new Board(
+      size,
+      new Position(height, width),
+      Settings.timeInterval,
+    );
     this.app.stage.addChild(board);
     this.board = board;
   }
@@ -75,7 +84,7 @@ class Board extends PIXI.Container {
     this.isChangingDirection = true;
     this.isRunning = true;
 
-    this._intervalAnimation(this._interval);
+    this.tick(this._interval);
   };
 
   _generateStartingPositions = () => {
@@ -100,12 +109,11 @@ class Board extends PIXI.Container {
 
   _generateField = () => {
     let index = 0;
-    let tile;
     this.matrix = [];
     for (let col = 0; col < this._boardSize.col; col++) {
       this.matrix[col] = [];
       for (let row = 0; row < this._boardSize.row; row++) {
-        tile = new Tile(this._tileSize, col, row, false, index);
+        let tile = new Tile(this._tileSize, col, row, false, index);
         this.matrix[col][row] = tile;
         this.addChild(tile);
         index += 1;
@@ -118,7 +126,10 @@ class Board extends PIXI.Container {
     for (let child of this.children) {
       if (!child.isActive) this.foodPositions.push(child.parentIndex);
     }
-    this._generateFood();
+
+    for (let i = 0; i < Settings.initialFood; i++) {
+      this._generateFood();
+    }
   };
 
   _generateFood = () => {
@@ -167,7 +178,7 @@ class Board extends PIXI.Container {
     return p;
   };
 
-  _intervalAnimation = interval => {
+  tick = interval => {
     this.secondsInterval = setInterval(() => {
       const n = this.foodPositions.indexOf(this.currentHead.parentIndex);
       this.foodPositions.splice(n, 1);
@@ -188,10 +199,10 @@ class Board extends PIXI.Container {
           this.gameOver();
         }
       } else {
+        this._updateTail();
         this.currentHead.isActive = true;
       }
 
-      this._updateTail();
       this.isChangingDirection = false;
     }, interval);
   };
@@ -253,7 +264,6 @@ class Square extends PIXI.Graphics {
     this._redraw();
   }
 }
-
 class Tile extends Square {
   direction = Directions.LEFT;
   _isFood = false;
