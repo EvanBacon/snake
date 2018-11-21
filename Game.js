@@ -94,7 +94,7 @@ class Board extends PIXI.Container {
     for (let i = 0; i < this.snakeLength; i++) {
       const c = _loopValue(this.head.col + i, 0, this._boardSize.col - 1);
       const r = _loopValue(this.head.row, 0, this._boardSize.row - 1);
-      this.matrix[c][r].isActive = true;
+      this.matrix[c][r].isSnake = true;
     }
   };
 
@@ -116,7 +116,7 @@ class Board extends PIXI.Container {
   _restartFood = () => {
     this.foodPositions = [];
     for (let child of this.children) {
-      if (!child.isActive) this.foodPositions.push(child.parentIndex);
+      if (!child.isSnake) this.foodPositions.push(child.parentIndex);
     }
     this._generateFood();
   };
@@ -125,12 +125,12 @@ class Board extends PIXI.Container {
     const cell = this.children[
       this.foodPositions[Math.floor(Math.random() * this.foodPositions.length)]
     ];
-    cell.isActive = true;
+    cell.isSnake = true;
     cell.isFood = true;
   };
 
   _updateTail = () => {
-    this.currentTail.isActive = false;
+    this.currentTail.isSnake = false;
 
     this.foodPositions.push(this.currentTail.parentIndex);
 
@@ -178,7 +178,7 @@ class Board extends PIXI.Container {
       this.head.add(velocity);
       this.head = this.loopPosition(this.head);
 
-      if (this.currentHead.isActive) {
+      if (this.currentHead.isSnake) {
         if (this.currentHead.isFood) {
           this.snakeLength++;
           this.currentHead.isFood = false;
@@ -188,7 +188,7 @@ class Board extends PIXI.Container {
           this.gameOver();
         }
       } else {
-        this.currentHead.isActive = true;
+        this.currentHead.isSnake = true;
       }
 
       this._updateTail();
@@ -259,7 +259,7 @@ class Tile extends Square {
   _isFood = false;
   _updateColor = () => {
     if (this._isFood) this.color = Settings.foodColor;
-    else if (this._isActive) this.color = Settings.snakeColor;
+    else if (this._isSnake) this.color = Settings.snakeColor;
     else this.color = Settings.backgroundColor;
   };
 
@@ -272,19 +272,19 @@ class Tile extends Square {
     this._updateColor();
   }
 
-  get isActive() {
-    return this._isActive;
+  get isSnake() {
+    return this._isSnake;
   }
-  set isActive(v) {
-    this._isActive = v;
+  set isSnake(v) {
+    this._isSnake = v;
     this._updateColor();
   }
-  constructor(size, x, y, isActive, parentIndex) {
+  constructor(size, x, y, isSnake, parentIndex) {
     super({ size });
     this.x = size * x;
     this.y = size * y;
 
-    this.isActive = isActive;
+    this.isSnake = isSnake;
     this.parentIndex = parentIndex;
   }
 }
