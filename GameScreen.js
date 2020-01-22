@@ -8,45 +8,46 @@ import Links from './components/Links';
 import Colors from './constants/Colors';
 import Game from './Game';
 
-export default class App extends React.Component {
-  state = { score: 0, isPlaying: false };
+export default function App({ onReady }) {
+  const [score, setScore] = React.useState(0);
+  const [isPlaying, setPlaying] = React.useState(false);
+  let game;
 
-  onTap = () => {
-    if (this.game) {
-      this.game.board.onTap();
+  const onContextCreate = React.useMemo(() => context => {
+    game = new Game(context);
+    game.board.onScore = score => setScore(score);
+    game.board.onPlaying = isPlaying => setPlaying(isPlaying);
+    onReady()
+  }, []);
+
+  const onTap = React.useMemo(() => () => {
+    if (game) {
+      game.board.onTap();
     }
-  };
+  }, []);
 
-  onSwipe = direction => {
-    if (this.game) {
-      this.game.board.onSwipe(direction);
+  const onSwipe = React.useMemo(() => direction => {
+    if (game) {
+      game.board.onSwipe(direction);
     }
-  };
+  }, []);
 
-  onContextCreate = context => {
-    this.game = new Game(context);
-    this.game.board.onScore = score => this.setState({ score });
-    this.game.board.onPlaying = isPlaying => this.setState({ isPlaying });
-    this.props.onReady()
-  };
-  render() {
-    return (
-      <View style={styles.container}>
-        <GestureView
-          style={{ flex: 1 }}
-          onTap={this.onTap}
-          onSwipe={this.onSwipe}
-        >
-          <GLView
-            style={{ flex: 1, height: '100%', overflow: 'hidden' }}
-            onContextCreate={this.onContextCreate}
-          />
-        </GestureView>
-        <Text style={styles.score}>{this.state.score}</Text>
-        <Links show={!this.state.isPlaying} />
-      </View>
-    );
-  }
+  return (
+    <View style={styles.container}>
+      <GestureView
+        style={styles.gestureView}
+        onTap={onTap}
+        onSwipe={onSwipe}
+      >
+        <GLView
+          style={{ flex: 1, height: '100%', overflow: 'hidden' }}
+          onContextCreate={onContextCreate}
+        />
+      </GestureView>
+      <Text style={styles.score}>{score}</Text>
+      <Links show={!isPlaying} />
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -55,6 +56,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingTop: Constants.statusBarHeight,
     backgroundColor: Colors.primary,
+  },
+  gestureView: {
+    flex: 1,
   },
   score: {
     position: 'absolute',
