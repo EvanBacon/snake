@@ -1,15 +1,20 @@
 {
   "name": "snake",
-  "version": "0.0.0",
-  "description": "No description",
-  "author": "Evan Bacon",
-  "private": true,
-  "main": "node_modules/expo/AppEntry.js",
+  "version": "2.0.0",
+  "description": "The goal of this project is to create a simple Snake clone that could be used in any WebGL context. The primary target being native iPhone and Android apps.",
   "dependencies": {
-    "expo": "^30.0.0",
-    "react": "16.3.1",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-30.0.0.tar.gz",
-    "expo-pixi": "0.3.1",
-    "react-native-paper": "2.1.3"
+    "expo": "~36.0.0",
+    "expo-constants": "~8.0.0",
+    "expo-gl": "~8.0.0",
+    "expo-pixi": "1.2.0",
+    "react": "~16.9.0",
+    "react-dom": "~16.9.0",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz",
+    "react-native-gesture-handler": "~1.5.0",
+    "react-native-web": "~0.11.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0",
+    "babel-preset-expo": "~8.0.0"
   }
 }

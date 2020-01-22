@@ -1,7 +1,7 @@
-import ExpoPixi, { PIXI } from 'expo-pixi';
+import { PIXI } from 'expo-pixi';
 import { PixelRatio } from 'react-native';
-import { GestureHandler } from 'expo';
-const { Directions } = GestureHandler;
+import { Directions } from 'react-native-gesture-handler';
+
 
 function _loopValue(v, min, max) {
   if (Settings.areWallsLooping) {
@@ -25,9 +25,9 @@ const Settings = {
 
 export default class Main {
   constructor(context) {
-    this.app = ExpoPixi.application({
-      context,
-      backgroundColor: Settings.backgroundColor,
+    this.app = new PIXI.Application({ 
+      context, 
+      backgroundColor: Settings.backgroundColor 
     });
 
     const size = Settings.tileSize * PixelRatio.get();
@@ -200,7 +200,7 @@ class Board extends PIXI.Container {
         }
       } else {
         this._updateTail();
-        this.currentHead.isActive = true;
+        this.currentHead.isSnake = true;
       }
 
       this.isChangingDirection = false;
