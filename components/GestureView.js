@@ -67,6 +67,7 @@ class GestureView extends Component {
     window.addEventListener('keydown', this.onKeyDown, false);
     window.addEventListener('keyup', this.onKeyUp, false);
   }
+  
   componentWillUnmount() {
     if (this.view) {
       this.view.removeEventListener('touchstart', freezeBody, false);
