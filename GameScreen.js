@@ -1,14 +1,15 @@
-import { GLView } from 'expo-gl';
 import Constants from 'expo-constants';
+import { GLView } from 'expo-gl';
 import * as React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import Game from './Game';
 import GestureView from './components/GestureView';
+import Links from './components/Links';
 import Colors from './constants/Colors';
+import Game from './Game';
 
 export default class App extends React.Component {
-  state = { score: 0 };
+  state = { score: 0, isPlaying: false };
 
   onTap = () => {
     if (this.game) {
@@ -25,6 +26,7 @@ export default class App extends React.Component {
   onContextCreate = context => {
     this.game = new Game(context);
     this.game.board.onScore = score => this.setState({ score });
+    this.game.board.onPlaying = isPlaying => this.setState({ isPlaying });
     this.props.onReady()
   };
   render() {
@@ -41,6 +43,7 @@ export default class App extends React.Component {
           />
         </GestureView>
         <Text style={styles.score}>{this.state.score}</Text>
+        <Links show={!this.state.isPlaying} />
       </View>
     );
   }
@@ -54,13 +57,13 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary,
   },
   score: {
-    fontFamily: 'kombat',
-    fontSize: 48,
-    textAlign: 'right',
     position: 'absolute',
     top: 24,
     right: 24,
     opacity: 0.6,
+    fontFamily: 'kombat',
+    fontSize: 48,
+    textAlign: 'right',
     fontWeight: 'bold',
   },
 });
