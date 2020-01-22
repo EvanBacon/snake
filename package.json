@@ -4,6 +4,7 @@
   "description": "The goal of this project is to create a simple Snake game that could be used in any WebGL context.",
   "dependencies": {
     "expo": "~36.0.0",
+    "expo-blur": "~8.0.0",
     "expo-constants": "~8.0.0",
     "expo-gl": "~8.0.0",
     "expo-pixi": "1.2.0",
