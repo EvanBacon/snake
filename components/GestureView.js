@@ -172,7 +172,7 @@ class GestureView extends Component {
 
     return (
       <View
-        style={StyleSheet.flatten([{ flex: 1, cursor: 'pointer' }, style])}
+        style={[{ cursor: 'pointer' }, style]}
         tabIndex="0"
         ref={view => {
           const nextView = getElement(view);
