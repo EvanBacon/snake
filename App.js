@@ -2,7 +2,7 @@ import { AppLoading, SplashScreen, Updates } from 'expo';
 import { Asset } from 'expo-asset';
 import Constants from 'expo-constants';
 import React from 'react';
-import { Animated, Button, StyleSheet, Text, View } from 'react-native';
+import { Animated, Button, StyleSheet, Text, View, Platform } from 'react-native';
 import GameScreen from './GameScreen';
 import * as Font from 'expo-font';
 
@@ -52,7 +52,7 @@ function AnimatedSplashScreen({ image }) {
       Animated.timing(animation, {
         toValue: 0,
         duration: 200,
-        useNativeDriver: true,
+        useNativeDriver: Platform.select({ web: false, default: true }),
       }).start(() => setAnimationComplete(true));
     }
   }, [isGameReady]);
