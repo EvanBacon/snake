@@ -21,8 +21,8 @@ const Settings = {
   timeInterval: 70,
   areWallsLooping: true,
   initialFood: 3,
+  autoRestart: true,
 };
-
 export default class Main {
   constructor(context) {
     this.app = ExpoPixi.application({
@@ -30,6 +30,13 @@ export default class Main {
       backgroundColor: Settings.backgroundColor,
     });
 
+    if (!this.app.renderer.width || !this.app.renderer.height) {
+      console.error(
+        `Snake: Game size must be larger than ${this.app.renderer.width}x${
+          this.app.renderer.height
+        }`,
+      );
+    }
     const size = Settings.tileSize * PixelRatio.get();
     const width = Math.round(this.app.renderer.width / size);
     const height = Math.round(this.app.renderer.height / size);
@@ -210,6 +217,9 @@ class Board extends PIXI.Container {
   gameOver = () => {
     this.isRunning = false;
     clearInterval(this.secondsInterval);
+    if (Settings.autoRestart) {
+      this.restart();
+    }
   };
 
   onTap = () => {

@@ -25,8 +25,9 @@ export default class App extends React.Component {
     this.game.board.onScore = score => this.setState({ score });
   };
   render() {
+    const { style, ...props } = this.props;
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, style]}>
         <GestureView onTap={this.onTap} onSwipe={this.onSwipe}>
           <GLView style={{ flex: 1 }} onContextCreate={this.onContextCreate} />
         </GestureView>
