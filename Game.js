@@ -18,7 +18,7 @@ const Settings = {
   foodColor: 0xff0000,
   snakeColor: 0x6660e7,
   backgroundColor: 0x7ED321,
-  timeInterval: 70,
+  timeInterval: 90,
   areWallsLooping: true,
   initialFood: 3,
 };
@@ -107,15 +107,20 @@ class Board extends PIXI.Container {
     }
   };
 
+  matrix = [];
+
   _generateField = () => {
     let index = 0;
-    this.matrix = [];
     for (let col = 0; col < this._boardSize.col; col++) {
-      this.matrix[col] = [];
+      if (!this.matrix[col]) this.matrix[col] = [];
       for (let row = 0; row < this._boardSize.row; row++) {
-        let tile = new Tile(this._tileSize, col, row, false, index);
-        this.matrix[col][row] = tile;
-        this.addChild(tile);
+        if (this.matrix[col][row]) {
+          this.matrix[col][row].reset();
+        } else {
+          let tile = new Tile(this._tileSize, col, row, false, index);
+          this.matrix[col][row] = tile;
+          this.addChild(tile);
+        }
         index += 1;
       }
     }
@@ -124,7 +129,9 @@ class Board extends PIXI.Container {
   _restartFood = () => {
     this.foodPositions = [];
     for (let child of this.children) {
-      if (!child.isSnake) this.foodPositions.push(child.parentIndex);
+      if (!child.isSnake) {
+        this.foodPositions.push(child.parentIndex);
+      }
     }
 
     for (let i = 0; i < Settings.initialFood; i++) {
@@ -272,6 +279,14 @@ class Square extends PIXI.Graphics {
 class Tile extends Square {
   direction = Directions.LEFT;
   _isFood = false;
+
+  reset() {
+    this._isFood = false;
+    this._isSnake = false;
+    this.direction = Directions.LEFT;
+    this._updateColor();
+  }
+
   _updateColor = () => {
     if (this._isFood) this.color = Settings.foodColor;
     else if (this._isSnake) this.color = Settings.snakeColor;
