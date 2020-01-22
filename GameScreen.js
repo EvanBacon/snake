@@ -7,30 +7,40 @@ import GestureView from './components/GestureView';
 import Links from './components/Links';
 import Colors from './constants/Colors';
 import Game from './Game';
+import useAppState from './hooks/useAppState';
+import { BlurView } from 'expo-blur';
 
 export default function App({ onReady }) {
   const [score, setScore] = React.useState(0);
   const [isPlaying, setPlaying] = React.useState(false);
-  let game;
+  const appState = useAppState();
+  const isPaused = appState !== 'active';
+
+  let game = React.useRef(null);
 
   const onContextCreate = React.useMemo(() => context => {
-    game = new Game(context);
-    game.board.onScore = score => setScore(score);
-    game.board.onPlaying = isPlaying => setPlaying(isPlaying);
+    game.current = new Game(context);
+    game.current.board.onScore = score => setScore(score);
+    game.current.board.onPlaying = isPlaying => setPlaying(isPlaying);
+    game.current.board.setPaused(isPaused);
     onReady()
   }, []);
 
+  React.useEffect(() => {
+    if (game.current) game.current.board.setPaused(isPaused)
+  }, [game && game.current, appState])
+
   const onTap = React.useMemo(() => () => {
-    if (game) {
-      game.board.onTap();
+    if (game.current) {
+      game.current.board.onTap();
     }
-  }, []);
+  }, [game && game.current]);
 
   const onSwipe = React.useMemo(() => direction => {
-    if (game) {
-      game.board.onSwipe(direction);
+    if (game.current) {
+      game.current.board.onSwipe(direction);
     }
-  }, []);
+  }, [game && game.current]);
 
   return (
     <View style={styles.container}>
@@ -44,10 +54,21 @@ export default function App({ onReady }) {
           onContextCreate={onContextCreate}
         />
       </GestureView>
+
+      {isPaused && <Paused />}
+
       <Text style={styles.score}>{score}</Text>
       <Links show={!isPlaying} />
     </View>
   );
+}
+
+function Paused() {
+  return (
+    <BlurView intensity={90} style={[StyleSheet.absoluteFill, { justifyContent: 'center', alignItems: 'center'}]}>
+      <Text style={{ fontFamily: 'kombat', textAlign: 'center', fontSize: 48, }}>Paused</Text>
+    </BlurView>
+  )
 }
 
 const styles = StyleSheet.create({
