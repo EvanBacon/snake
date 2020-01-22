@@ -1,11 +1,11 @@
 {
   "expo": {
-    "version": "1.0.0",
-    "icon": "./assets/icons/app-icon.png",
+    "icon": "./assets/icon.png",
+    "themeColor": "#7ED321",
     "splash": {
-      "image": "./assets/icons/loading-icon.png",
+      "image": "./assets/loading.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#7ED321"
     }
   }
 }

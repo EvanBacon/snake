@@ -19,8 +19,8 @@ export const swipeDirections = {
 };
 
 const swipeConfig = {
-    velocityThreshold: 0.2,
-    directionalOffsetThreshold: 80,
+  velocityThreshold: 0.2,
+  directionalOffsetThreshold: 80,
 };
 
 export const keyMap = {
@@ -82,15 +82,19 @@ class GestureView extends Component {
 
   onKeyDown = e => {
     const direction = keyMap[e.code];
-    if (direction && this.props.onResponderGrant) {
-      this.props.onResponderGrant();
+    // For snake on keyboard we want to move when the key is pressed down
+    if (direction && this.props.onSwipe) {
+      this.props.onSwipe(direction);
     }
+    // if (direction && this.props.onResponderGrant) {
+    //   this.props.onResponderGrant(direction);
+    // }
   };
 
   onKeyUp = e => {
     const direction = keyMap[e.code];
     if (direction) {
-      this.props.onSwipe(direction);
+      // this.props.onSwipe(direction);
     }
   };
 

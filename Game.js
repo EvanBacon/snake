@@ -17,7 +17,7 @@ const Settings = {
   hasGrid: true,
   foodColor: 0xff0000,
   snakeColor: 0x6660e7,
-  backgroundColor: 0xeeeeee,
+  backgroundColor: 0x7ED321,
   timeInterval: 70,
   areWallsLooping: true,
   initialFood: 3,

@@ -3,15 +3,15 @@ import { PanResponder, StyleSheet, View } from 'react-native';
 import { Directions } from 'react-native-gesture-handler';
 
 export const swipeDirections = {
-    SWIPE_UP: Directions.UP,
-    SWIPE_DOWN: Directions.DOWN,
-    SWIPE_LEFT: Directions.LEFT,
-    SWIPE_RIGHT: Directions.RIGHT,
+  SWIPE_UP: Directions.UP,
+  SWIPE_DOWN: Directions.DOWN,
+  SWIPE_LEFT: Directions.LEFT,
+  SWIPE_RIGHT: Directions.RIGHT,
 };
 
 const swipeConfig = {
-   velocityThreshold: 0.2,
-    directionalOffsetThreshold: 80,
+  velocityThreshold: 0.2,
+  directionalOffsetThreshold: 80,
 };
 
 function isValidSwipe(

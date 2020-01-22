@@ -5,6 +5,7 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import Game from './Game';
 import GestureView from './components/GestureView';
+import Colors from './constants/Colors';
 
 export default class App extends React.Component {
   state = { score: 0 };
@@ -28,16 +29,16 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-      <GestureView
-      style={{flex: 1}}
-         onTap={this.onTap}
-        onSwipe={this.onSwipe}
-      >
-        <GLView
-          style={{ flex: 1, height: '100%', overflow: 'hidden' }}
-          onContextCreate={this.onContextCreate}
-        />
-      </GestureView>
+        <GestureView
+          style={{ flex: 1 }}
+          onTap={this.onTap}
+          onSwipe={this.onSwipe}
+        >
+          <GLView
+            style={{ flex: 1, height: '100%', overflow: 'hidden' }}
+            onContextCreate={this.onContextCreate}
+          />
+        </GestureView>
         <Text style={styles.score}>{this.state.score}</Text>
       </View>
     );
@@ -49,7 +50,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     paddingTop: Constants.statusBarHeight,
-    backgroundColor: '#ecf0f1',
+    backgroundColor: Colors.primary,
   },
   score: {
     fontSize: 48,
