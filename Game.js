@@ -209,12 +209,14 @@ class Board extends PIXI.Container {
 
   gameOver = () => {
     this.isRunning = false;
+    this.onPlaying(false);
     clearInterval(this.secondsInterval);
   };
 
   onTap = () => {
     if (!this.isRunning) {
       this.restart();
+      this.onPlaying(true);
     }
   };
 
@@ -224,7 +226,10 @@ class Board extends PIXI.Container {
         this.isChangingDirection = true;
         this.headDirection = dir;
       }
+    } else {
+      this.restart();
     }
+    this.onPlaying(true);
   };
 }
 
