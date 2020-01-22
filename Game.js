@@ -87,6 +87,14 @@ class Board extends PIXI.Container {
     this.tick(this._interval);
   };
 
+  setPaused = (isPaused) => {
+    if (!isPaused === this.isRunning) {
+      return;
+    }
+    this.isRunning = !isPaused;
+    this.onPlaying(this.isRunning);
+  }
+
   _generateStartingPositions = () => {
     this.snakeLength = Settings.initialSize;
 
@@ -186,7 +194,10 @@ class Board extends PIXI.Container {
   };
 
   tick = interval => {
+    clearInterval(this.secondsInterval);
+
     this.secondsInterval = setInterval(() => {
+      if (!this.isRunning) return;
       const n = this.foodPositions.indexOf(this.currentHead.parentIndex);
       this.foodPositions.splice(n, 1);
 
