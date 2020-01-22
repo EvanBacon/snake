@@ -112,12 +112,10 @@ class GestureView extends Component {
   };
 
   render() {
-    const { style = {}, ...props } = this.props;
-
     return (
       <View
-        style={StyleSheet.flatten([{ flex: 1 }, style])}
-        {...props}
+        
+        {...this.props}
         {...this._panResponder.panHandlers}
       />
     );
