@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { PanResponder, StyleSheet, View } from 'react-native';
-import { Directions } from 'react-native-gesture-handler';
+import Directions from '../constants/Directions'
 
 export const swipeDirections = {
   SWIPE_UP: Directions.UP,
