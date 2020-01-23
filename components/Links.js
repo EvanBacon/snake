@@ -11,7 +11,7 @@ export default function Links({ show }) {
 }
 
 const link = 'https://twitter.com/baconbrix'
-const sourceLink = 'https://github.com/EvanBacon/pixi-snake'
+const sourceLink = 'https://github.com/EvanBacon/snake'
 
 const styles = StyleSheet.create({
   linkContainer: {
