@@ -2,6 +2,9 @@
   "name": "snake",
   "version": "2.0.0",
   "description": "The goal of this project is to create a simple Snake game that could be used in any WebGL context.",
+  "scripts": {
+    "deploy:web": "expo build:web && netlify deploy --prod --dir web-build/"
+  },
   "dependencies": {
     "expo": "~36.0.0",
     "expo-blur": "~8.0.0",
