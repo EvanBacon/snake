@@ -1,8 +1,7 @@
-'use strict';
 import React, { Component } from 'react';
 import { PanResponder, View, StyleSheet } from 'react-native';
 import { findDOMNode } from 'react-dom';
-import { Directions } from 'react-native-gesture-handler';
+import Directions from '../constants/Directions'
 
 const getElement = component => {
   try {
