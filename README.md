@@ -4,7 +4,7 @@
 
 ## Try it now
 
-Run the project in Snack to try it now: https://snack.expo.io/@git/github.com/EvanBacon/pixi-snake
+Run the project in Snack to try it now: https://retrosnake.netlify.com/
 
 ## Check out the video tutorial! 
 
