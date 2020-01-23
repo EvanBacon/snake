@@ -1,7 +1,7 @@
 import { PIXI } from 'expo-pixi';
 import { PixelRatio } from 'react-native';
-import { Directions } from 'react-native-gesture-handler';
 
+import Directions from './constants/Directions';
 
 function _loopValue(v, min, max) {
   if (Settings.areWallsLooping) {
