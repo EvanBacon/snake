@@ -58,6 +58,13 @@
   </head>
 
   <body>
+    <script>
+      // use full screen on iOS PWAs
+      if (window.navigator.standalone === true) {
+        const html = document.getElementsByTagName('html')[0];
+        html.setAttribute('style', 'height: 100vh;');
+      }
+    </script>
     <noscript>%NO_SCRIPT%</noscript>
     <div id="%ROOT_ID%"></div>
   </body>
