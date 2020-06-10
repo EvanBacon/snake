@@ -1,7 +1,7 @@
 {
   "expo": {
     "icon": "./assets/icon.png",
-    "themeColor": "#7ED321",
+    "primaryColor": "#7ED321",
     "splash": {
       "image": "./assets/loading.png",
       "resizeMode": "contain",
